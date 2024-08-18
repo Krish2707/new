@@ -34,7 +34,7 @@ const About=()=>{
     useEffect(()=>{
        callAboutPage();
     },[])
-    
+    console.log(userData)
     if(userData){
         return(
             <>

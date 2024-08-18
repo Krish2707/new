@@ -3,20 +3,25 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const nodemailer = require('nodemailer');
+
 const authenticate = require('../middleware/authenticate');
 
 require('../db/conn');
 const User = require('../model/userSchema');
-
+const nodemailer=require("nodemailer");
 // Configure the Nodemailer transporter
 const transporter = nodemailer.createTransport({
   service: 'Gmail',
   auth: {
-    user: process.env.EMAIL_USER,  // Use environment variables for security
-    pass: process.env.EMAIL_PASS,   
+    // user: EMAIL_USER=thokkukrishnaprasad@gmail.com
+    // EMAIL_PASS=opdo tiim hvzh sayh,  // Use environment variables for security
+    user: 'thokkukrishnaprasad@gmail.com',
+    pass: 'opdo tiim hvzh sayh',   
   },
 });
+  console.log('Email User:', process.env.EMAIL_USER);
+  console.log('Email Pass:', process.env.EMAIL_PASS);
+
 
 // Root Route
 router.get("/", (req, res) => {
@@ -81,6 +86,10 @@ router.post("/signin", async (req, res) => {
   }
 });
 
+router.get("/about",authenticate,(req,res)=>{
+  res.send(req.rootUser);
+});
+
 // Get User Data
 router.get("/getdata", authenticate, (req, res) => {
   res.send(req.rootUser);
@@ -99,10 +108,12 @@ router.post("/grievance", authenticate, async (req, res) => {
     if (userContact) {
       await userContact.addGrievance(name, email, phone, dept, grievance);
       await userContact.save();
-
+      console.log(email);
       // Prepare email options with user's email as the sender
       const mailOptions = {
-        from: email,  // Sender address (user's email)
+
+        from: email,
+        // Sender address (user's email)
         to: 'thokkukrishnaprasad@gmail.com',  // Replace with admin's email address
         subject: 'New Grievance Submitted',
         text: `A new grievance has been submitted by ${name} (Email: ${email}).\n\nDetails:\nDepartment: ${dept}\nPhone: ${phone}\nGrievance: ${grievance}`,
