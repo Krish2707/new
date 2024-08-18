@@ -1,4 +1,4 @@
-# Grievance-Portal
+# comprehensive grievance portal
 A protal where users can file complaints and get real time updates via registered email.
 
 
