@@ -7,7 +7,7 @@ Major feature:
 2. JWT Authentication 
 3. Password hashing 
 
-This project is best to show in your college as project.
+
 
 # Frontend
 - Setup react on your system
